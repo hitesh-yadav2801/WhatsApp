@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".SignInActivity"
     android:background="@color/greyBackground"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".SignUpActivity">
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,17 +26,6 @@
             android:layout_height="100dp"
             app:srcCompat="@drawable/icons8_whatsapp" />
 
-        <EditText
-            android:id="@+id/etUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:hint="Username"
-            android:inputType="textPersonName"
-            android:padding="9dp" />
 
         <EditText
             android:id="@+id/etEmail"
@@ -46,7 +36,8 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:padding="9dp" />
+            android:padding="9dp"
+            android:layout_marginTop="15dp"/>
 
         <EditText
             android:id="@+id/etPassword"
@@ -59,21 +50,21 @@
             android:padding="9dp" />
 
         <TextView
-            android:id="@+id/tvAlreadyAccount"
+            android:id="@+id/tvClickSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="right"
             android:padding="3dp"
-            android:text="Already have an account?" />
+            android:text="Click for Sign Up" />
 
         <Button
-            android:id="@+id/btn_signUp"
+            android:id="@+id/btn_signIn"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:padding="15dp"
-            android:text="Sign Up"
+            android:text="Sign In"
             app:cornerRadius="8dp" />
 
         <LinearLayout
