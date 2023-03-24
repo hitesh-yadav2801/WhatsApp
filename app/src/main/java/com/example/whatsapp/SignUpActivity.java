@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -58,6 +59,13 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+        binding.tvAlreadyAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                startActivity(intent);
             }
         });
     }
