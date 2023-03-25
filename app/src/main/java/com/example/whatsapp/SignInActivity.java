@@ -28,6 +28,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,8 +92,7 @@ public class SignInActivity extends AppCompatActivity {
         binding.btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(i, 123);
+                signIn();
             }
         });
         if (auth.getCurrentUser() != null){
@@ -100,26 +100,41 @@ public class SignInActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+    int RC_SIGN_IN = 40;
+    private void signIn() {
+        Intent intent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(intent, RC_SIGN_IN);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 123){
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-                auth.signInWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                firebaseAuth(account.getIdToken());
+            } catch (ApiException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void firebaseAuth(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onSuccess(AuthResult authResult) {
+                    public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             FirebaseUser user = auth.getCurrentUser();
-                            Users user1 = new Users();
-                            assert user != null;
-                            user1.setUserId(user.getUid());
-                            user1.setUserName(user.getDisplayName());
-                            user1.setProfilePic(user.getPhotoUrl().toString());
-                            database.getReference().child("users").child(user.getUid()).setValue(user1);
+
+                            Users users = new Users();
+                            users.setUserId(user.getUid());
+                            users.setUserName(user.getDisplayName());
+                            users.setProfilePic(users.getProfilePic());
+
+                            database.getReference("Users").child(user.getUid()).setValue(users);
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
@@ -127,9 +142,5 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                 });
-            } catch (ApiException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }
