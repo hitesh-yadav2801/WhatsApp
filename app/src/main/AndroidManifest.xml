@@ -12,23 +12,23 @@
         android:theme="@style/Theme.WhatsApp"
         tools:targetApi="31">
         <activity
+            android:name=".ChatDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignInActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>/>
+            </intent-filter>
         </activity>
-
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"></activity>
     </application>
 
 </manifest>

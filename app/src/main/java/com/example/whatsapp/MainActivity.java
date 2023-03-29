@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.whatsapp.Adapters.FragmentsAdapter;
 import com.example.whatsapp.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -17,12 +18,15 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
+        binding.viewPager.setAdapter(new FragmentsAdapter(getSupportFragmentManager()));
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 
     @Override
