@@ -38,6 +38,7 @@ public class ChatDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChatDetailActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
