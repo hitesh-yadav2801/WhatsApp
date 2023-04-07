@@ -20,7 +20,7 @@ public class ChatAdapter extends RecyclerView.Adapter{
     ArrayList<MessageModel> messageModels;
     Context context;
     int SENDER_VIEW_TYPE = 1;
-    int RECIEVER_VIEW_TYPE = 2;
+    int RECEIVER_VIEW_TYPE = 2;
 
     public ChatAdapter(ArrayList<MessageModel> messageModels, Context context) {
         this.messageModels = messageModels;
@@ -34,7 +34,7 @@ public class ChatAdapter extends RecyclerView.Adapter{
             View view = LayoutInflater.from(context).inflate(R.layout.sample_sender, parent, false);
             return new SenderViewHolder(view);
         } else {
-            View view = LayoutInflater.from(context).inflate(R.layout.sample_reciever, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.sample_receiver, parent, false);
             return new ReciverViewHolder(view);
         }
 
@@ -44,7 +44,7 @@ public class ChatAdapter extends RecyclerView.Adapter{
         if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())) {
             return SENDER_VIEW_TYPE;
         } else {
-            return RECIEVER_VIEW_TYPE;
+            return RECEIVER_VIEW_TYPE;
         }
 
     }
@@ -55,7 +55,7 @@ public class ChatAdapter extends RecyclerView.Adapter{
         if (holder.getClass() == SenderViewHolder.class){
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
         } else {
-            ((ReciverViewHolder)holder).recieverMsg.setText(messageModel.getMessage());
+            ((ReciverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
         }
     }
 
@@ -65,11 +65,11 @@ public class ChatAdapter extends RecyclerView.Adapter{
     }
 
     public class ReciverViewHolder extends RecyclerView.ViewHolder {
-        TextView recieverMsg, recieverTime;
+        TextView receiverMsg, receiverTime;
         public ReciverViewHolder(@NonNull View itemView) {
             super(itemView);
-            recieverMsg = itemView.findViewById(R.id.recieverText);
-            recieverTime = itemView.findViewById(R.id.recieverTime);
+            receiverMsg = itemView.findViewById(R.id.receiverText);
+            receiverTime = itemView.findViewById(R.id.receiverTime);
         }
     }
 
